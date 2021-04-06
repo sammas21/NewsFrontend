@@ -6,7 +6,7 @@ export default function Pager({count, onClick}) {
     return (
         <div className="root">
         
-            <Pagination count={count} onChange={onClick} variant="outlined" color="primary" />
+            <Pagination className="pager" count={count} onChange={onClick} variant="outlined" color="primary" />
 
         </div>
     );

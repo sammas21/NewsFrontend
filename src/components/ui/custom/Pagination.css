@@ -1,4 +1,8 @@
 .root{
     display: 'flex';
     align-items: 'center';
+    align-content: center;
+}
+.pager{
+    flex: 1;
 }
