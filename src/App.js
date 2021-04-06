@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import './App.css';
-import {MediaCard} from './components/ui'
 import Home from './components/home/Home';
 
 function App() {

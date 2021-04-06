@@ -1,13 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState,useEffect} from 'react';
 import useDataFromURL from "../../services/useDataFromUrl";
 import { MediaCard, Pager, SearchBar } from '../ui';
-import axios from 'axios';
+import { getPageCount, getFormattedDate } from '../../utils'
+import {PAGE_SIZE, STR_APP_TITLE, ENDPOINT_EVERY, ENDPOINT_INIT} from '../../constants'
 
+//Added this variable because free api returns only 100 results
 function Home() {
     
+
     //State Initialization
     const [searchText, setSearchText]= useState(null);
     const [page, setPage] = useState(1);
+    const [endPoint, setEndPoint] = useState(ENDPOINT_INIT);
     const query = {
         q:searchText||"*",
         page:page
@@ -15,18 +19,27 @@ function Home() {
 
     const data = useDataFromURL({
         method: 'GET',
-        url: `http://localhost:3000/everything`,
-        params: query
+        url: `http://localhost:3002/${endPoint}`,
+        params: {...query, pageSize:PAGE_SIZE}
     }, [searchText, page]);
-
-    
-    
     
     const onSearchClicked = (text) => {
-       
-        query.q = text||"*";
+        if(text){
+            query.q = text||"*";
+            setEndPoint(ENDPOINT_EVERY);
+        }else{
+            setEndPoint(ENDPOINT_INIT);
+        }
+        
         setSearchText(text);
     }
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        return () => {
+            
+        }
+    }, [page])
 
     const onPageChange = (e, pageNum) => {
         query.page = pageNum;
@@ -35,9 +48,11 @@ function Home() {
 
     return (
         <div>
+            <h1 className="app-title">{STR_APP_TITLE}</h1>
+            <SearchBar onClick={onSearchClicked}></SearchBar>
              {data && (data.totalResults>=0)? 
-                <div>
-                    <SearchBar onClick={onSearchClicked}></SearchBar>
+                <div className="resultWrapper">
+                    
                     {data.articles.map((article, index)=>                        
                         <MediaCard 
                             key={index}
@@ -45,11 +60,11 @@ function Home() {
                             imgSrc={article.urlToImage}
                             author={article.author}
                             description={article.description}
-                            url={article.title}
-                            date={article.publishedAt}
-                            ></MediaCard>
+                            url={article.url}
+                            date={getFormattedDate(article.publishedAt)}
+                        ></MediaCard>
                     )}
-                    <Pager count={Math.round(data.totalResults/20)} onClick={onPageChange}></Pager>
+                    <Pager count={getPageCount(data.totalResults)} onClick={onPageChange}></Pager>
                  
                 </div> 
              

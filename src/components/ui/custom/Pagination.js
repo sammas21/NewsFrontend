@@ -1,13 +1,22 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
 
-export default function Pager({count, onClick}) {
- 
-    return (
-        <div className="root">
-        
-            <Pagination className="pager" count={count} onChange={onClick} variant="outlined" color="primary" />
+const useStyles = makeStyles(() => ({
+  root: {
+    '& > *': {
+        margin: "auto",
+        width: "fit-content",
+    },
+  },
+}));
 
-        </div>
-    );
+export default function Pager({count, onClick}) {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <Pagination count={count} size="large" count={count} onChange={onClick} variant="outlined" color="primary" />
+    </div>
+  );
 }

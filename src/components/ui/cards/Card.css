@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*PEN STYLES*/
+
 * {
   box-sizing: border-box;
 }
@@ -172,15 +172,5 @@
     bottom: 0;
     z-index: -1;
   }
-  .blog-card.alt {
-    flex-direction: row-reverse;
-  }
-  .blog-card.alt .description:before {
-    left: inherit;
-    right: -10px;
-    transform: skew(3deg);
-  }
-  .blog-card.alt .details {
-    padding-left: 25px;
-  }
+  
 }
