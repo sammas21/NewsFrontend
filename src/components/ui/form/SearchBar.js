@@ -1,22 +1,30 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import React, {useState} from 'react';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
-}));
+import InputBase from '@material-ui/core/InputBase';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
 
-export default function BasicTextFields() {
-  const classes = useStyles();
+
+
+export default function SerachBar({onClick}) {
+
+  const [text, setText] = useState("");
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <TextField id="standard-basic" label="Standard" />
-    </form>
+    <div component="form" className="root">
+      <InputBase
+        className={"input"}
+        placeholder="Search News"
+        inputProps={{ 'aria-label': 'Search News' }}
+        onChange={(e)=>{
+          let temp = e.target.value.toString()
+          setText(temp)
+        }}
+      />
+      <IconButton type="submit" className="iconButton" onClick={()=>{onClick(text)}} aria-label="search">
+        <SearchIcon />
+      </IconButton>
+    
+    </div>
   );
 }

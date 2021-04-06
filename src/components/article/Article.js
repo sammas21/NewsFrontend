@@ -6,8 +6,7 @@ function Article() {
 
     return (
         <div className="Article">
-
-            
+                        
         </div>
     )
 }
