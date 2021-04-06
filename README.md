@@ -1,6 +1,12 @@
 # UK News App (Frontend)
     This Application is made to display news related to UK and world 
     
+    ###Functionalities covered
+        1. Diplays latest news for UK 
+        2. User can search for news using search box.
+        3. User can se news arround the world.
+        4. User can navigate to the main article site.
+    
 
 ## Available Scripts
 
