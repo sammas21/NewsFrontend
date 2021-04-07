@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react';
 import useDataFromURL from "../../services/useDataFromUrl";
 import { MediaCard, Pager, SearchBar } from '../ui';
 import { getPageCount, getFormattedDate } from '../../utils'
-import {PAGE_SIZE, STR_APP_TITLE, ENDPOINT_EVERY, ENDPOINT_INIT} from '../../constants'
+import {PAGE_SIZE, STR_APP_TITLE, ENDPOINT_EVERY, ENDPOINT_INIT, API_URL} from '../../constants'
 
 //Added this variable because free api returns only 100 results
 function Home() {
@@ -12,6 +12,7 @@ function Home() {
     const [searchText, setSearchText]= useState(null);
     const [page, setPage] = useState(1);
     const [endPoint, setEndPoint] = useState(ENDPOINT_INIT);
+    const [loading, setLoading] = useState(true);
     const query = {
         q:searchText||"*",
         page:page
@@ -19,7 +20,7 @@ function Home() {
 
     const data = useDataFromURL({
         method: 'GET',
-        url: `http://localhost:3002/${endPoint}`,
+        url: `${API_URL}${endPoint}`,
         params: {...query, pageSize:PAGE_SIZE}
     }, [searchText, page]);
     
@@ -30,7 +31,6 @@ function Home() {
         }else{
             setEndPoint(ENDPOINT_INIT);
         }
-        
         setSearchText(text);
     }
 
@@ -39,7 +39,15 @@ function Home() {
         return () => {
             
         }
-    }, [page])
+    }, [page]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        setPage(1)
+        return () => {
+            
+        }
+    }, [searchText])
 
     const onPageChange = (e, pageNum) => {
         query.page = pageNum;
@@ -68,7 +76,7 @@ function Home() {
                  
                 </div> 
              
-            : <div></div>}
+            : <div><h3>No Results Found !!</h3></div>}
         </div> 
     )
 }

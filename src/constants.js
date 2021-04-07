@@ -5,4 +5,5 @@ export const STR_APP_TITLE = "UK NEWS";
 
 export const ENDPOINT_INIT = "top-headlines";
 export const ENDPOINT_EVERY = "everything";
+export const API_URL = "http://localhost:3002/";
 
